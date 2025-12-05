@@ -1,0 +1,127 @@
+.integration-container {
+  padding: 20px;
+  max-width: 1200px;
+  margin: 0 auto;
+}
+
+.step-container {
+  background: white;
+  border-radius: 8px;
+  padding: 20px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  margin-top: 20px;
+}
+
+.table-container {
+  overflow-x: auto;
+  margin: 20px 0;
+}
+
+.comparison-table {
+  width: 100%;
+  border-collapse: collapse;
+  background: white;
+}
+
+.comparison-table th,
+.comparison-table td {
+  border: 1px solid #e0e0e0;
+  padding: 12px;
+  text-align: left;
+}
+
+.comparison-table th {
+  background-color: #f5f5f5;
+  font-weight: 600;
+}
+
+.item-info {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.item-id {
+  color: #666;
+  font-size: 0.9em;
+}
+
+.item-name {
+  font-weight: 500;
+}
+
+.not-integrated {
+  color: #d32f2f;
+  font-weight: 500;
+}
+
+.pagination {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 16px;
+  margin: 20px 0;
+}
+
+.pagination button {
+  padding: 8px 16px;
+  border: 1px solid #ddd;
+  background: white;
+  border-radius: 4px;
+  cursor: pointer;
+  transition: all 0.2s;
+}
+
+.pagination button:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+
+.pagination button:not(:disabled):hover {
+  background: #f5f5f5;
+}
+
+.navigation-buttons {
+  display: flex;
+  justify-content: space-between;
+  margin-top: 20px;
+}
+
+.next-step-button,
+.back-button {
+  padding: 10px 20px;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+  font-weight: 500;
+  transition: all 0.2s;
+}
+
+.next-step-button {
+  background: #1976d2;
+  color: white;
+}
+
+.next-step-button:hover {
+  background: #1565c0;
+}
+
+.back-button {
+  background: #f5f5f5;
+  color: #333;
+}
+
+.back-button:hover {
+  background: #e0e0e0;
+}
+
+.loading,
+.error {
+  text-align: center;
+  padding: 20px;
+  font-size: 1.2em;
+}
+
+.error {
+  color: #d32f2f;
+} 

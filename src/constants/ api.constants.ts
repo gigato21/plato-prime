@@ -1,0 +1,11 @@
+export const HTTP_RESPONSE = {
+  SUCCESS: '1',
+  WARNING: '2',
+  ERROR: '3',
+  INFO: '4',
+  HTTP_200_OK: '200',
+  PERMISION_ERROR: '401',
+  CODE_NOT_DEFINED: '601',
+  MALFORMED_JSON: '701',
+  ACCESS_DENIED: '403',
+};

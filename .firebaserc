@@ -1,0 +1,8 @@
+{
+  "projects": {
+    "default": "admin-rest-5bd85",
+    "develop": "admin-cartaai-dev"
+  },
+  "targets": {},
+  "etags": {}
+}

@@ -1,0 +1,7 @@
+<svg width="64" height="64" viewBox="0 0 32 32" fill="none" xmlns="http://www.w3.org/2000/svg" className="mx-auto">
+                <rect width="32" height="32" rx="4" fill="red"/>
+                <text x="30%" y="60%" dominantBaseline="middle" textAnchor="middle" fill="white" fontSize="200" fontWeight="bold" transform="rotate(5 16 16)">AI</text>
+                <circle cx="28" cy="4" r="2" fill="black"/>
+                <circle cx="28" cy="4" r="1" fill="red"/>
+                <path d="M28 4H4" stroke="black" strokeWidth="2"/>
+              </svg>

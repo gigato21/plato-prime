@@ -1,0 +1,110 @@
+export const themeStyles = {
+  sushi: {
+    background: 'bg-gradient-to-br from-gray-900/80 to-gray-800',
+    headerBackground: 'bg-menu-paper',
+    textColor: '#E5E7EB',
+    accentColor: '#60A5FA',
+    titleColor: '#22D3EE',
+    priceColor: '#60A5FA',
+    popularColor: '#EF4444',
+    containerBg: 'rgba(17, 24, 39, 0.7)',
+    fontFamily: 'font-serif',
+    fonts: ['Poppins', 'Playfair Display', 'Roboto Slab'],
+    backgroundImage: 'url("https://res.cloudinary.com/dkdsfv4ov/image/upload/v1733590856/cartaai/ezavhpggqsyxv18o4bfn.jpg")',
+    sectionColors: {
+      'Appetizers': 'rgba(17, 24, 39, 0.8)',
+      'Main Courses': 'rgba(31, 41, 55, 0.8)',
+      'Desserts': 'rgba(55, 65, 81, 0.8)',
+    }
+  },
+  pizzeria: {
+    background: 'bg-red-900/95',
+    headerBackground: 'bg-red-950',
+    textColor: '#FEF3C7',
+    accentColor: '#22D3EE',
+    titleColor: '#FEF3C7',
+    priceColor: '#FEF3C7',
+    popularColor: '#FBBF24',
+    containerBg: 'rgba(127, 29, 29, 0.7)',
+    fontFamily: 'font-italian',
+    fonts: ['Dancing Script', 'Oswald', 'Poppins'],
+    backgroundImage: 'url("https://res.cloudinary.com/dkdsfv4ov/image/upload/v1733590855/cartaai/jye6coh8ohjwkibxgdku.jpg")',
+    sectionColors: {
+      'Pizzas': 'rgba(127, 29, 29, 0.8)',
+      'Pastas': 'rgba(153, 27, 27, 0.8)',
+      'Desserts': 'rgba(185, 28, 28, 0.8)',
+    }
+  },
+  steakhouse: {
+    background: 'bg-stone-900/95',
+    headerBackground: 'bg-black',
+    textColor: '#FDE68A',
+    accentColor: '#22D3EE',
+    titleColor: '#FDE68A',
+    priceColor: '#FDE68A',
+    popularColor: '#DC2626',
+    containerBg: 'rgba(41, 37, 36, 0.7)',
+    fontFamily: 'font-western',
+    fonts: ['Merriweather', 'Oswald', 'Poppins'],
+    backgroundImage: 'url("https://res.cloudinary.com/dkdsfv4ov/image/upload/v1733590864/cartaai/nvzo4y7eyv5cqkc3hhqx.jpg")',
+    sectionColors: {
+      'Steaks': 'rgba(41, 37, 36, 0.8)',
+      'Sides': 'rgba(68, 64, 60, 0.8)',
+      'Drinks': 'rgba(87, 83, 78, 0.8)',
+    }
+  },
+  seafood: {
+    background: 'bg-blue-900/95',
+    headerBackground: 'bg-blue-950',
+    textColor: '#E0F2FE',
+    accentColor: '#22D3EE',
+    titleColor: '#E0F2FE',
+    priceColor: '#E0F2FE',
+    popularColor: '#0EA5E9',
+    containerBg: 'rgba(30, 58, 138, 0.7)',
+    fontFamily: 'font-nautical',
+    fonts: ['Poppins', 'Roboto Slab', 'Playfair Display'],
+    backgroundImage: 'url("https://res.cloudinary.com/dkdsfv4ov/image/upload/v1733590850/cartaai/whe1w8hfnircumjyhqs5.jpg")',
+    sectionColors: {
+      'Fish': 'rgba(30, 58, 138, 0.8)',
+      'Shellfish': 'rgba(29, 78, 216, 0.8)',
+      'Sides': 'rgba(37, 99, 235, 0.8)',
+    }
+  },
+  mexican: {
+    background: 'bg-yellow-900/95',
+    headerBackground: 'bg-yellow-950',
+    textColor: '#FEF9C3',
+    accentColor: '#22D3EE',
+    titleColor: '#FEF9C3',
+    priceColor: '#FEF9C3',
+    popularColor: '#EF4444',
+    containerBg: 'rgba(113, 63, 18, 0.7)',
+    fontFamily: 'font-fiesta',
+    fonts: ['Dancing Script', 'Poppins', 'Oswald'],
+    backgroundImage: 'url("https://res.cloudinary.com/dkdsfv4ov/image/upload/v1733590853/cartaai/zlwkq5a5mrrdxfp5joec.jpg")',
+    sectionColors: {
+      'Tacos': 'rgba(113, 63, 18, 0.8)',
+      'Burritos': 'rgba(146, 64, 14, 0.8)',
+      'Desserts': 'rgba(180, 83, 9, 0.8)',
+    }
+  },
+  vegan: {
+    background: 'bg-green-900/95',
+    headerBackground: 'bg-green-950',
+    textColor: '#DCFCE7',
+    accentColor: '#22D3EE',
+    titleColor: '#DCFCE7',
+    priceColor: '#DCFCE7',
+    popularColor: '#22C55E',
+    containerBg: 'rgba(20, 83, 45, 0.7)',
+    fontFamily: 'font-nature',
+    fonts: ['Merriweather', 'Poppins', 'Playfair Display'],
+    backgroundImage: 'url("https://res.cloudinary.com/dkdsfv4ov/image/upload/v1733590861/cartaai/hgl0hwowbpepdnexv3je.jpg")',
+    sectionColors: {
+      'Salads': 'rgba(20, 83, 45, 0.8)',
+      'Main Dishes': 'rgba(22, 101, 52, 0.8)',
+      'Desserts': 'rgba(21, 128, 61, 0.8)',
+    }
+  }
+};
