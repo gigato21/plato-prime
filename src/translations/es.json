@@ -29,5 +29,21 @@
   "clabe": "CLABE Interbancaria",
   "accountNumber": "Número de cuenta",
   "bank": "Banco",
-  "accountHolder": "Titular de la cuenta"
+  "accountHolder": "Titular de la cuenta",
+  "cfdi": "CFDI",
+  "electronicInvoicing": "Facturación Electrónica",
+  "rfc": "RFC",
+  "businessName": "Razón Social",
+  "fiscalRegime": "Régimen Fiscal",
+  "fiscalPostalCode": "Código Postal Fiscal",
+  "cfdiUse": "Uso de CFDI",
+  "invoiceSeries": "Serie de Factura",
+  "invoiceFolio": "Folio",
+  "requestFiscalData": "Solicitar datos fiscales",
+  "automaticInvoicing": "Facturación automática",
+  "globalInvoice": "Factura global",
+  "paymentMethod": "Forma de pago",
+  "paymentType": "Método de pago",
+  "singlePayment": "Pago en una sola exhibición",
+  "partialPayment": "Pago en parcialidades"
 }
