@@ -1,12 +1,13 @@
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 
 const countryCodes = [
+  { code: '+52', country: 'México', flag: '🇲🇽' },
+  { code: '+1', country: 'Estados Unidos', flag: '🇺🇸' },
   { code: '+51', country: 'Perú', flag: '🇵🇪' },
   { code: '+54', country: 'Argentina', flag: '🇦🇷' },
   { code: '+55', country: 'Brasil', flag: '🇧🇷' },
   { code: '+56', country: 'Chile', flag: '🇨🇱' },
   { code: '+57', country: 'Colombia', flag: '🇨🇴' },
-  { code: '+52', country: 'México', flag: '🇲🇽' },
   { code: '+58', country: 'Venezuela', flag: '🇻🇪' },
   { code: '+593', country: 'Ecuador', flag: '🇪🇨' },
   { code: '+595', country: 'Paraguay', flag: '🇵🇾' },
@@ -25,13 +26,13 @@ const countryCodes = [
 
 const CountryCodeSelect = ({ value, onChange }) => {
   return (
-    <Select value={value} onValueChange={onChange}>
+    <Select value={value || '+52'} onValueChange={onChange}>
       <SelectTrigger className="w-[100px] bg-cartaai-white/10 dark:text-gray-200 text-gray-700 text-sm">
-        <SelectValue placeholder={value} />
+        <SelectValue placeholder={value || '+52'} />
       </SelectTrigger>
       <SelectContent className="bg-cartaai-black dark:text-gray-200 text-gray-700 z-[999]">
-        {countryCodes.map((country) => (
-          <SelectItem key={country.code} value={country.code}>
+        {countryCodes.map((country, index) => (
+          <SelectItem key={`${country.code}-${index}`} value={country.code}>
             <div className="flex items-center">
               <span className="mr-2">{country.flag}</span>
               <span>{country.code}</span>
