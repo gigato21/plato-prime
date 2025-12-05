@@ -56,10 +56,10 @@ const NextStepsModal = ({ isOpen, onClose }) => {
       <DialogContent className="sm:max-w-[800px] bg-background">
         <DialogHeader>
           <DialogTitle className="text-2xl font-bold text-center mb-4">
-            ¡Felicitaciones! Tu negocio ha sido creado
+            ¡Felicidades! Tu negocio ha sido creado
           </DialogTitle>
           <p className="text-center text-muted-foreground">
-            Aquí hay algunos pasos sugeridos para comenzar a configurar tu negocio
+            Aquí tienes algunos pasos sugeridos para comenzar a configurar tu negocio
           </p>
         </DialogHeader>
         
@@ -81,21 +81,21 @@ const NextStepsModal = ({ isOpen, onClose }) => {
           <NextStepsCard
             icon={Clock}
             title="Establece tus Horarios"
-            description="Define los horarios de atención y disponibilidad para delivery y recojo en tienda."
+            description="Define los horarios de atención y disponibilidad para envío a domicilio y para recoger."
             path="/restaurant"
           />
           
           <NextStepsCard
             icon={MapPin}
             title="Configura Zonas de Entrega"
-            description="Define las áreas donde realizarás entregas y establece costos de envío."
+            description="Define las colonias y zonas donde realizarás entregas y establece costos de envío."
             path="/delivery-zones"
           />
         </div>
 
         <div className="mt-6 flex justify-end">
           <Button onClick={handleClose} className="bg-cartaai-red hover:bg-cartaai-red/80">
-            Comenzar
+            ¡Órale, comenzar!
           </Button>
         </div>
       </DialogContent>

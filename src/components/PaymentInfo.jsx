@@ -12,15 +12,23 @@ const TransferType = {
   MOBILE: 1
 };
 
+// Bancos mexicanos
 const Banks = {
-  BCP: 'BCP',
-  BBVA: 'BBVA',
-  INTERBANK: 'INTERBANK'
+  BBVA: 'BBVA México',
+  BANORTE: 'Banorte',
+  SANTANDER: 'Santander',
+  BANAMEX: 'Citibanamex',
+  HSBC: 'HSBC',
+  SCOTIABANK: 'Scotiabank',
+  BANREGIO: 'BanRegio',
+  AZTECA: 'Banco Azteca'
 };
 
+// Métodos de pago móviles mexicanos
 const MobilePayments = {
-  YAPE: 'YAPE',
-  PLIN: 'PLIN'
+  OXXO_PAY: 'OXXO Pay',
+  CODI: 'CoDi',
+  SPEI: 'SPEI'
 };
 
 const BankAccountForm = ({ account, onSave, onCancel }) => {
@@ -32,7 +40,9 @@ const BankAccountForm = ({ account, onSave, onCancel }) => {
     type: TransferType.NORMAL
   });
 
-  const isDigitalWallet = formData.bank === MobilePayments.YAPE || formData.bank === MobilePayments.PLIN;
+  const isDigitalWallet = formData.bank === MobilePayments.OXXO_PAY || 
+                          formData.bank === MobilePayments.CODI ||
+                          formData.bank === MobilePayments.SPEI;
 
   const handleSubmit = (e) => {
     e.preventDefault();
@@ -41,6 +51,13 @@ const BankAccountForm = ({ account, onSave, onCancel }) => {
       type: isDigitalWallet ? TransferType.MOBILE : TransferType.NORMAL,
       interBankAccountNumber: isDigitalWallet ? '' : formData.interBankAccountNumber
     });
+  };
+
+  const getPlaceholder = () => {
+    if (formData.bank === MobilePayments.OXXO_PAY) return "Referencia OXXO Pay";
+    if (formData.bank === MobilePayments.CODI) return "Número de celular registrado";
+    if (formData.bank === MobilePayments.SPEI) return "CLABE interbancaria";
+    return "Ej: 123456789012345678";
   };
 
   return (
@@ -52,12 +69,18 @@ const BankAccountForm = ({ account, onSave, onCancel }) => {
           onValueChange={(value) => setFormData(prev => ({ ...prev, bank: value }))}
         >
           <SelectTrigger className="glass-input text-cartaai-white">
-            <SelectValue placeholder="Seleccione un banco" />
+            <SelectValue placeholder="Seleccione un banco o método" />
           </SelectTrigger>
           <SelectContent>
+            <SelectItem disabled className="font-semibold text-muted-foreground">
+              — Bancos —
+            </SelectItem>
             {Object.values(Banks).map(bank => (
               <SelectItem key={bank} value={bank}>{bank}</SelectItem>
             ))}
+            <SelectItem disabled className="font-semibold text-muted-foreground">
+              — Pagos Digitales —
+            </SelectItem>
             {Object.values(MobilePayments).map(payment => (
               <SelectItem key={payment} value={payment}>{payment}</SelectItem>
             ))}
@@ -67,13 +90,13 @@ const BankAccountForm = ({ account, onSave, onCancel }) => {
 
       <div>
         <Label className="text-cartaai-white">
-          {isDigitalWallet ? "Número de celular" : "Número de cuenta"}
+          {isDigitalWallet ? "Número o referencia" : "Número de cuenta"}
         </Label>
         <Input
           value={formData.accountNumber}
           onChange={(e) => setFormData(prev => ({ ...prev, accountNumber: e.target.value }))}
           className="glass-input text-cartaai-white"
-          placeholder={isDigitalWallet ? "Ej: 999888777" : "Ej: 123-456789-0-12"}
+          placeholder={getPlaceholder()}
         />
       </div>
 
@@ -83,13 +106,13 @@ const BankAccountForm = ({ account, onSave, onCancel }) => {
           value={formData.accountName}
           onChange={(e) => setFormData(prev => ({ ...prev, accountName: e.target.value }))}
           className="glass-input text-cartaai-white"
-          placeholder="Ej: EMPRESA SAC"
+          placeholder="Ej: EMPRESA SA DE CV"
         />
       </div>
 
       {!isDigitalWallet && (
         <div>
-          <Label className="text-cartaai-white">CCI</Label>
+          <Label className="text-cartaai-white">CLABE Interbancaria</Label>
           <Input
             value={formData.interBankAccountNumber}
             onChange={(e) => setFormData(prev => ({ 
@@ -97,7 +120,8 @@ const BankAccountForm = ({ account, onSave, onCancel }) => {
               interBankAccountNumber: e.target.value 
             }))}
             className="glass-input text-cartaai-white"
-            placeholder="Ej: 002-123-456789012345-12"
+            placeholder="Ej: 012345678901234567 (18 dígitos)"
+            maxLength={18}
           />
         </div>
       )}
@@ -151,7 +175,7 @@ const PaymentInfo = ({ paymentData, setPaymentData }) => {
             Métodos de Pago
           </h2>
           <p className="text-sm text-cartaai-white/70">
-            Configura las cuentas bancarias para recibir pagos
+            Configura las cuentas bancarias y métodos de pago
           </p>
         </div>
 
@@ -171,12 +195,12 @@ const PaymentInfo = ({ paymentData, setPaymentData }) => {
                     <h3 className="text-cartaai-white font-medium">{account.bank}</h3>
                     <p className="text-sm text-cartaai-white/70">{account.accountName}</p>
                     <p className="text-sm text-cartaai-white/70">
-                      {account.type === TransferType.MOBILE ? 'Celular: ' : 'Cuenta: '}
+                      {account.type === TransferType.MOBILE ? 'Referencia: ' : 'Cuenta: '}
                       {account.accountNumber}
                     </p>
                     {account.type === TransferType.NORMAL && account.interBankAccountNumber && (
                       <p className="text-sm text-cartaai-white/70">
-                        CCI: {account.interBankAccountNumber}
+                        CLABE: {account.interBankAccountNumber}
                       </p>
                     )}
                   </div>
@@ -209,7 +233,7 @@ const PaymentInfo = ({ paymentData, setPaymentData }) => {
               className="w-full bg-cartaai-white/10 hover:bg-cartaai-white/20 text-cartaai-white"
             >
               <Plus className="h-4 w-4 mr-2" />
-              Agregar cuenta bancaria
+              Agregar cuenta o método de pago
             </Button>
           )}
 

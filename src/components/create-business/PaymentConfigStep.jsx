@@ -1,9 +1,9 @@
-
 import { Label } from "@/components/ui/label";
 import { Input } from "@/components/ui/input";
 import { Switch } from "@/components/ui/switch";
 import { Button } from "@/components/ui/button";
-import { Plus } from "lucide-react";
+import { Plus, Trash2 } from "lucide-react";
+import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 import { 
   Table,
   TableBody,
@@ -12,6 +12,19 @@ import {
   TableHeader,
   TableRow,
 } from "@/components/ui/table";
+
+const mexicanBanks = [
+  'BBVA México',
+  'Banorte',
+  'Santander',
+  'Citibanamex',
+  'HSBC',
+  'Scotiabank',
+  'BanRegio',
+  'Banco Azteca',
+  'Inbursa',
+  'Bancos Afirme'
+];
 
 const PaymentConfigStep = ({ data, updateData }) => {
   const handleChange = (field, value) => {
@@ -42,7 +55,7 @@ const PaymentConfigStep = ({ data, updateData }) => {
       tipoTransferenciaId: "",
       tipoTransferenciaNombreEntidad: "",
       tipoTransferenciaNumeroCuenta: "",
-      tipoTransferenciaCodigoInterbancario: "",
+      tipoTransferenciaCodigoInterbancario: "", // CLABE en México
       tipoTransferenciaTipo: "1",
       tipoTransferenciaTitular: "",
       tipoTransferenciaEstado: "1",
@@ -55,11 +68,22 @@ const PaymentConfigStep = ({ data, updateData }) => {
     });
   };
 
+  const removeBankAccount = (index) => {
+    const newAccounts = (data.localListaCuentasTransferencia || []).filter((_, i) => i !== index);
+    updateData({
+      ...data,
+      localListaCuentasTransferencia: newAccounts
+    });
+  };
+
   return (
     <div className="space-y-6">
       <div className="space-y-4">
         <div className="flex items-center justify-between">
-          <Label className="dark:text-gray-200 text-gray-700">Acepta pago en línea</Label>
+          <div>
+            <Label className="dark:text-gray-200 text-gray-700">Acepta pago en línea</Label>
+            <p className="text-xs text-muted-foreground">Pagos con tarjeta, OXXO Pay, SPEI</p>
+          </div>
           <Switch
             checked={data.localAceptaPagoEnLinea === "1"}
             onCheckedChange={() => handleSwitchChange('localAceptaPagoEnLinea')}
@@ -68,7 +92,10 @@ const PaymentConfigStep = ({ data, updateData }) => {
         </div>
 
         <div className="flex items-center justify-between">
-          <Label className="dark:text-gray-200 text-gray-700">Solo pago en línea</Label>
+          <div>
+            <Label className="dark:text-gray-200 text-gray-700">Solo pago en línea</Label>
+            <p className="text-xs text-muted-foreground">No acepta efectivo ni otros métodos</p>
+          </div>
           <Switch
             checked={data.localSoloPagoEnLinea === "1"}
             onCheckedChange={() => handleSwitchChange('localSoloPagoEnLinea')}
@@ -77,7 +104,10 @@ const PaymentConfigStep = ({ data, updateData }) => {
         </div>
 
         <div className="flex items-center justify-between">
-          <Label className="dark:text-gray-200 text-gray-700">Acepta transferencia bancaria</Label>
+          <div>
+            <Label className="dark:text-gray-200 text-gray-700">Acepta transferencia SPEI</Label>
+            <p className="text-xs text-muted-foreground">Transferencias bancarias vía CLABE</p>
+          </div>
           <Switch
             checked={data.localPagoTransferenciaMenuOnline === "1"}
             onCheckedChange={() => handleSwitchChange('localPagoTransferenciaMenuOnline')}
@@ -86,7 +116,10 @@ const PaymentConfigStep = ({ data, updateData }) => {
         </div>
 
         <div className="flex items-center justify-between">
-          <Label className="dark:text-gray-200 text-gray-700">Acepta tarjeta por delivery</Label>
+          <div>
+            <Label className="dark:text-gray-200 text-gray-700">Acepta tarjeta por delivery</Label>
+            <p className="text-xs text-muted-foreground">Terminal portátil al momento de entrega</p>
+          </div>
           <Switch
             checked={data.localAceptaTarjetaPorDelivery === "1"}
             onCheckedChange={() => handleSwitchChange('localAceptaTarjetaPorDelivery')}
@@ -95,7 +128,10 @@ const PaymentConfigStep = ({ data, updateData }) => {
         </div>
 
         <div className="flex items-center justify-between">
-          <Label className="dark:text-gray-200 text-gray-700">Acepta efectivo por delivery</Label>
+          <div>
+            <Label className="dark:text-gray-200 text-gray-700">Acepta efectivo por delivery</Label>
+            <p className="text-xs text-muted-foreground">Pago en efectivo al recibir pedido</p>
+          </div>
           <Switch
             checked={data.localAceptaEfectivoPorDelivery === "1"}
             onCheckedChange={() => handleSwitchChange('localAceptaEfectivoPorDelivery')}
@@ -104,12 +140,12 @@ const PaymentConfigStep = ({ data, updateData }) => {
         </div>
 
         <div>
-          <Label className="dark:text-gray-200 text-gray-700">Correo de delivery personalizado</Label>
+          <Label className="dark:text-gray-200 text-gray-700">Correo de notificaciones de pedidos</Label>
           <Input
             value={data.localCorreoDeliveryPersonalizado || ''}
             onChange={(e) => handleChange('localCorreoDeliveryPersonalizado', e.target.value)}
             className="glass-input text-cartaai-white mt-1"
-            placeholder="ejemplo@tudominio.com"
+            placeholder="pedidos@turestaurante.com.mx"
           />
         </div>
       </div>
@@ -117,7 +153,10 @@ const PaymentConfigStep = ({ data, updateData }) => {
       {data.localPagoTransferenciaMenuOnline === "1" && (
         <div className="space-y-4">
           <div className="flex justify-between items-center">
-            <Label className="dark:text-gray-200 text-gray-700 text-lg">Cuentas bancarias</Label>
+            <div>
+              <Label className="dark:text-gray-200 text-gray-700 text-lg">Cuentas bancarias</Label>
+              <p className="text-xs text-muted-foreground">Agrega tus cuentas para recibir transferencias SPEI</p>
+            </div>
             <Button
               onClick={addBankAccount}
               variant="outline"
@@ -136,24 +175,34 @@ const PaymentConfigStep = ({ data, updateData }) => {
                   <TableHead className="dark:text-gray-200 text-gray-700">Banco</TableHead>
                   <TableHead className="dark:text-gray-200 text-gray-700">Titular</TableHead>
                   <TableHead className="dark:text-gray-200 text-gray-700">Número de cuenta</TableHead>
-                  <TableHead className="dark:text-gray-200 text-gray-700">CCI</TableHead>
+                  <TableHead className="dark:text-gray-200 text-gray-700">CLABE (18 dígitos)</TableHead>
+                  <TableHead className="dark:text-gray-200 text-gray-700 w-[50px]"></TableHead>
                 </TableRow>
               </TableHeader>
               <TableBody>
                 {(data.localListaCuentasTransferencia || []).map((account, index) => (
                   <TableRow key={index}>
                     <TableCell>
-                      <Input
+                      <Select
                         value={account.tipoTransferenciaNombreEntidad}
-                        onChange={(e) => handleBankAccountChange(index, 'tipoTransferenciaNombreEntidad', e.target.value)}
-                        className="glass-input text-cartaai-white"
-                      />
+                        onValueChange={(value) => handleBankAccountChange(index, 'tipoTransferenciaNombreEntidad', value)}
+                      >
+                        <SelectTrigger className="glass-input text-cartaai-white">
+                          <SelectValue placeholder="Seleccionar banco" />
+                        </SelectTrigger>
+                        <SelectContent>
+                          {mexicanBanks.map((bank) => (
+                            <SelectItem key={bank} value={bank}>{bank}</SelectItem>
+                          ))}
+                        </SelectContent>
+                      </Select>
                     </TableCell>
                     <TableCell>
                       <Input
                         value={account.tipoTransferenciaTitular}
                         onChange={(e) => handleBankAccountChange(index, 'tipoTransferenciaTitular', e.target.value)}
                         className="glass-input text-cartaai-white"
+                        placeholder="Nombre del titular"
                       />
                     </TableCell>
                     <TableCell>
@@ -161,6 +210,7 @@ const PaymentConfigStep = ({ data, updateData }) => {
                         value={account.tipoTransferenciaNumeroCuenta}
                         onChange={(e) => handleBankAccountChange(index, 'tipoTransferenciaNumeroCuenta', e.target.value)}
                         className="glass-input text-cartaai-white"
+                        placeholder="Número de cuenta"
                       />
                     </TableCell>
                     <TableCell>
@@ -168,7 +218,19 @@ const PaymentConfigStep = ({ data, updateData }) => {
                         value={account.tipoTransferenciaCodigoInterbancario}
                         onChange={(e) => handleBankAccountChange(index, 'tipoTransferenciaCodigoInterbancario', e.target.value)}
                         className="glass-input text-cartaai-white"
+                        placeholder="CLABE interbancaria"
+                        maxLength={18}
                       />
+                    </TableCell>
+                    <TableCell>
+                      <Button
+                        onClick={() => removeBankAccount(index)}
+                        variant="ghost"
+                        size="icon"
+                        className="text-red-500 hover:text-red-700"
+                      >
+                        <Trash2 className="h-4 w-4" />
+                      </Button>
                     </TableCell>
                   </TableRow>
                 ))}
