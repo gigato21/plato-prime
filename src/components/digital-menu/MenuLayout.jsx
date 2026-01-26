@@ -5,6 +5,7 @@ import { useEffect, useState } from 'react';
 import { getApiUrls } from '@/config/api';
 import { useSelector } from 'react-redux';
 import MenuHeader from './MenuHeader';
+import { authGet } from '@/utils/apiClient';
 
 const MenuLayout = ({ 
   from, 
@@ -23,7 +24,7 @@ const MenuLayout = ({
   useEffect(() => {
     const fetchBusinessInfo = async () => {
       try {
-        const response = await fetch(`${API_URLS.SERVICIOS_GENERALES_URL}/api/v1/business/?subDomain=${subDomain}&localId=${localId}`);
+        const response = await authGet(`${API_URLS.SERVICIOS_GENERALES_URL}/api/v1/business/?subDomain=${subDomain}&localId=${localId}`);
         if (!response.ok) {
           throw new Error('Network response was not ok');
         }

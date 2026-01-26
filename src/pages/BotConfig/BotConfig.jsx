@@ -7,6 +7,7 @@ import { Label } from "@/components/ui/label";
 import { toast } from "sonner";
 import { getApiUrls } from "@/config/api";
 import { Bot, Save, Loader2 } from "lucide-react";
+import { authGet, authPut } from "@/utils/apiClient";
 
 const BotConfig = () => {
   const navigate = useNavigate();
@@ -24,7 +25,7 @@ const BotConfig = () => {
     const fetchConfig = async () => {
       setIsLoading(true);
       try {
-        const response = await fetch(`${SERVICIOS_GENERALES_URL}/api/v1/chatbot-rules/${subDomain}`);
+        const response = await authGet(`${SERVICIOS_GENERALES_URL}/api/v1/chatbot-rules/${subDomain}`);
         if (!response.ok) {
           throw new Error('Error al cargar la configuración');
         }
@@ -66,13 +67,7 @@ const BotConfig = () => {
         return;
       }
 
-      const response = await fetch(`${SERVICIOS_GENERALES_URL}/api/v1/chatbot-rules/update/${subDomain}`, {
-        method: 'PUT',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify(payload)
-      });
+      const response = await authPut(`${SERVICIOS_GENERALES_URL}/api/v1/chatbot-rules/update/${subDomain}`, payload);
 
       if (!response.ok) {
         throw new Error('Error al actualizar la configuración');
