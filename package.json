@@ -54,7 +54,6 @@
     "embla-carousel-react": "^8.1.5",
     "framer-motion": "^11.15.0",
     "html-to-image": "^1.11.11",
-    "html2pdf.js": "^0.10.2",
     "input-otp": "^1.2.4",
     "leaflet": "^1.9.4",
     "leaflet-geosearch": "^4.0.0",
