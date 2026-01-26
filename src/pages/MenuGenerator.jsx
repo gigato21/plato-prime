@@ -4,8 +4,7 @@ import ThemeSwitcher from "@/components/ThemeSwitcher";
 import { themeStyles } from "@/types/theme";
 import { toPng } from 'html-to-image';
 import { Button } from "@/components/ui/button";
-import { Download, FileType, ArrowLeft, Shuffle } from "lucide-react";
-import html2pdf from 'html2pdf.js';
+import { Download, ArrowLeft, Shuffle } from "lucide-react";
 import { useNavigate } from "react-router-dom";
 import { DndProvider } from 'react-dnd';
 import { HTML5Backend } from 'react-dnd-html5-backend';
@@ -103,44 +102,52 @@ const MenuGenerator = () => {
     }
   };
 
-  const downloadPDF = () => {
+  const downloadHighResImage = async () => {
     if (menuRef.current === null) return;
     toast({
-      title: "Generando PDF...",
+      title: "Generando imagen de alta resolución...",
       description: "Por favor espera mientras generamos tu menú.",
     });
 
-    const opt = {
-      margin: [10, 10],
-      filename: `menu-${theme}.pdf`,
-      image: { type: 'jpeg', quality: 1 },
-      html2canvas: { 
-        scale: 2,
-        useCORS: true,
-        backgroundColor: null,
-      },
-      jsPDF: { 
-        unit: 'mm', 
-        format: 'a4', 
-        orientation: 'portrait',
-      }
-    };
-
-    html2pdf().set(opt).from(menuRef.current).save()
-      .then(() => {
-        toast({
-          title: "¡PDF descargado!",
-          description: "Tu menú ha sido descargado correctamente en formato PDF.",
-        });
-      })
-      .catch((error) => {
-        console.error('Error al generar PDF:', error);
-        toast({
-          title: "Error",
-          description: "Hubo un error al generar el PDF. Por favor intenta de nuevo.",
-          variant: "destructive",
-        });
+    try {
+      // Generate high-resolution image suitable for printing
+      const dataUrl = await toPng(menuRef.current, {
+        quality: 1.0,
+        pixelRatio: 4, // Higher resolution for print quality
+        cacheBust: true,
+        includeQueryParams: true,
+        skipAutoScale: true,
+        style: {
+          transform: 'none',
+        },
+        filter: (node) => {
+          return !node.classList?.contains('fixed');
+        },
+        beforeDraw: (canvas) => {
+          const context = canvas.getContext('2d');
+          context.imageSmoothingEnabled = true;
+          context.imageSmoothingQuality = 'high';
+          return Promise.resolve();
+        }
       });
+      
+      const link = document.createElement('a');
+      link.download = `menu-${theme}-print.png`;
+      link.href = dataUrl;
+      link.click();
+
+      toast({
+        title: "¡Imagen descargada!",
+        description: "Tu menú de alta resolución ha sido descargado. Puedes imprimirlo o convertirlo a PDF con cualquier visor de imágenes.",
+      });
+    } catch (error) {
+      console.error('Error al generar la imagen:', error);
+      toast({
+        title: "Error",
+        description: "Hubo un error al generar la imagen. Por favor intenta de nuevo.",
+        variant: "destructive",
+      });
+    }
   };
 
   return (
@@ -171,12 +178,12 @@ const MenuGenerator = () => {
                   </Button>
                   
                   <Button 
-                    onClick={downloadPDF}
+                    onClick={downloadHighResImage}
                     variant="outline"
                     className="text-foreground hover:bg-accent"
                   >
-                    <FileType className="w-4 h-4 mr-2" />
-                    PDF
+                    <Download className="w-4 h-4 mr-2" />
+                    Alta Res
                   </Button>
 
                   <Button
