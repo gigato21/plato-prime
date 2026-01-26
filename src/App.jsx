@@ -216,7 +216,7 @@ const AppContent = () => {
       ) : (
         <PageWrapper>
           <Routes>
-            <Route path="/login" element={<LoginPage />} />
+            <Route path="/login" element={<AuthPage />} />
             <Route path="/registro" element={<SignupPage />} />
             <Route path="/auth" element={<AuthPage />} />
             <Route path="*" element={<Navigate to="/login" replace />} />
