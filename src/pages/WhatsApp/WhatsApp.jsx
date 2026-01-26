@@ -6,6 +6,7 @@ import WhatsAppHeader from './components/WhatsAppHeader';
 import WhatsAppContainer from './components/WhatsAppContainer';
 import { useToast } from "@/components/ui/use-toast";
 import { startOfDay } from 'date-fns';
+import { authGet, authPatch } from '@/utils/apiClient';
 
 const WhatsApp = () => {
   const API_URLS = getApiUrls();
@@ -32,7 +33,7 @@ const WhatsApp = () => {
           localId: localId
         });
 
-        const response = await fetch(
+        const response = await authGet(
           `${API_URLS.SERVICIOS_GENERALES_URL}/api/v1/bot-ctx/get-one?${queryParams}`
         );
 
@@ -89,16 +90,10 @@ const WhatsApp = () => {
 
   const updateGlobalBotStatus = async (enable) => {
     try {
-      const response = await fetch(`${API_URLS.SERVICIOS_GENERALES_URL}/api/v1/bot-ctx/update-is-on`, {
-        method: 'PATCH',
-        headers: {
-          'Content-Type': 'application/json'
-        },
-        body: JSON.stringify({
-          subDomain: subdomain,
-          localId: localId,
-          isOn: enable
-        })
+      const response = await authPatch(`${API_URLS.SERVICIOS_GENERALES_URL}/api/v1/bot-ctx/update-is-on`, {
+        subDomain: subdomain,
+        localId: localId,
+        isOn: enable
       });
 
       if (!response.ok) {
@@ -134,17 +129,11 @@ const WhatsApp = () => {
     
     try {
       // Primero hacemos la petición y esperamos la respuesta
-      const response = await fetch(`${API_URLS.SERVICIOS_GENERALES_URL}/api/v1/user-ctx/update-chat-on`, {
-        method: 'PATCH',
-        headers: {
-          'Content-Type': 'application/json'
-        },
-        body: JSON.stringify({
-          subDomain: subdomain,
-          localId: localId,
-          clientPhone: clientPhone,
-          chatIsOn: newBotState
-        })
+      const response = await authPatch(`${API_URLS.SERVICIOS_GENERALES_URL}/api/v1/user-ctx/update-chat-on`, {
+        subDomain: subdomain,
+        localId: localId,
+        clientPhone: clientPhone,
+        chatIsOn: newBotState
       });
 
       if (!response.ok) {

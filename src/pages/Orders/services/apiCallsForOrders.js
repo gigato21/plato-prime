@@ -1,27 +1,24 @@
 import { getApiUrls } from '@/config/api';
+import { authGet, authPost, authPatch } from '@/utils/apiClient';
 
 const API_URLS = getApiUrls();
 
 export const fetchAutoChangeStatus = async (subDomain, localId) => {
-  const response = await fetch(`${API_URLS.SERVICIOS_GENERALES_URL}/api/v1/business?subDomain=${subDomain}&localId=${localId}`);
+  const response = await authGet(`${API_URLS.SERVICIOS_GENERALES_URL}/api/v1/business?subDomain=${subDomain}&localId=${localId}`);
   if (!response.ok) throw new Error("Error al obtener el estado de auto-cambio");
   const data = await response.json();
   return data.data.timerOrderUpdateIsActive;
 };
 
 export const fetchProductDetails = async (localId, subDomain, productIds) => {
-  const response = await fetch(`${API_URLS.SERVICIOS_GENERALES_URL}/api/v1/menu/getProductInMenu/${localId}/${subDomain}`, {
-    method: 'POST',
-    headers: { 'Content-Type': 'application/json' },
-    body: JSON.stringify(productIds),
-  });
+  const response = await authPost(`${API_URLS.SERVICIOS_GENERALES_URL}/api/v1/menu/getProductInMenu/${localId}/${subDomain}`, productIds);
   if (!response.ok) throw new Error("Error al obtener los detalles de los productos");
   return await response.json();
 };
 
 export const fetchOrders = async (subDomain, localId) => {
   try {
-    const response = await fetch(`${API_URLS.SERVICIOS_GENERALES_URL}/api/v1/order/filled-orders/${subDomain}/${localId}`);
+    const response = await authGet(`${API_URLS.SERVICIOS_GENERALES_URL}/api/v1/order/filled-orders/${subDomain}/${localId}`);
     if (!response.ok) throw new Error("Error en la petición de órdenes");
     const data = await response.json();
     const timerConfig = data.timerConfig;
@@ -109,7 +106,7 @@ export const fetchOrdersAdmin = async (startDate = '', endDate = '', page = 1) =
       url += `&startDate=${startDate}&endDate=${endDate}`;
     }
 
-    const response = await fetch(url);
+    const response = await authGet(url);
     if (!response.ok) throw new Error("Error en la petición de órdenes");
     const data = await response.json();
     console.log(data.pagination, 'response')
@@ -201,13 +198,9 @@ export const fetchOrdersAdmin = async (startDate = '', endDate = '', page = 1) =
 
 export const sendAutoChangeConfig = async (subDomain, localId, isActive, intervalMinutes) => {
   try {
-    const response = await fetch(`${API_URLS.SERVICIOS_GENERALES_URL}/api/v1/order/change-status/${subDomain}/${localId}`, {
-      method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({ 
-        isActive, 
-        intervalTime: intervalMinutes * 60000 // Convertir minutos a milisegundos
-      }),
+    const response = await authPost(`${API_URLS.SERVICIOS_GENERALES_URL}/api/v1/order/change-status/${subDomain}/${localId}`, { 
+      isActive, 
+      intervalTime: intervalMinutes * 60000 // Convertir minutos a milisegundos
     });
 
     if (!response.ok) {
@@ -224,15 +217,9 @@ export const sendAutoChangeConfig = async (subDomain, localId, isActive, interva
 
 export const updateOrderStatus = async (orderId, newStatus, statusReason = '') => {
   try {
-    const response = await fetch(`${API_URLS.SERVICIOS_GENERALES_URL}/api/v1/order/${orderId}/status`, {
-      method: 'PATCH',
-      headers: {
-        'Content-Type': 'application/json',
-      },
-      body: JSON.stringify({
-        status: newStatus,
-        statusReason: statusReason
-      })
+    const response = await authPatch(`${API_URLS.SERVICIOS_GENERALES_URL}/api/v1/order/${orderId}/status`, {
+      status: newStatus,
+      statusReason: statusReason
     });
 
     if (!response.ok) {
@@ -248,7 +235,7 @@ export const updateOrderStatus = async (orderId, newStatus, statusReason = '') =
 };
 
 export const fetchOrderById = async (orderId) => {
-  const response = await fetch(`${API_URLS.SERVICIOS_GENERALES_URL}/api/v1/order/get-order/${orderId}`);
+  const response = await authGet(`${API_URLS.SERVICIOS_GENERALES_URL}/api/v1/order/get-order/${orderId}`);
   if (!response.ok) throw new Error("Error al obtener los detalles de la orden");
   const data = await response.json();
   return data.data;

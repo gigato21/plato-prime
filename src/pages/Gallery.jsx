@@ -5,6 +5,7 @@ import { getApiUrls } from '@/config/api';
 import Loader from '@/components/ui/loader';
 import { motion } from 'framer-motion';
 import ImgModal from '@/components/ui/Modal';
+import { authGet, authDelete, authPostFormData } from '@/utils/apiClient';
 
 const Gallery = () => {
   const API_URLS = getApiUrls();
@@ -23,7 +24,7 @@ const Gallery = () => {
 
   const fetchImages = async () => {
     try {
-      const response = await fetch(
+      const response = await authGet(
         `${API_URLS.SERVICIOS_GENERALES_URL}/api/v1/menu-pic?subDomain=${subDomain}&localId=${localId}`
       );
 
@@ -52,7 +53,7 @@ const Gallery = () => {
     });
 
     try {
-      const checkResponse = await fetch(
+      const checkResponse = await authGet(
         `${API_URLS.SERVICIOS_GENERALES_URL}/api/v1/menu-pic?subDomain=${subDomain}&localId=${localId}`
       );
 
@@ -66,12 +67,9 @@ const Gallery = () => {
         ? `${API_URLS.SERVICIOS_GENERALES_URL}/api/v1/menu-pic` 
         : `${API_URLS.SERVICIOS_GENERALES_URL}/api/v1/menu-pic/update-images`;
 
-      const uploadResponse = await fetch(
+      const uploadResponse = await authPostFormData(
         `${endpoint}?subDomain=${subDomain}&localId=${localId}`, 
-        {
-          method: 'POST',
-          body: formData,
-        }
+        formData
       );
 
       if (!uploadResponse.ok) {
@@ -108,11 +106,8 @@ const Gallery = () => {
 
   const deleteImage = async (imageUrl) => {
     try {
-      const response = await fetch(
-        `${API_URLS.SERVICIOS_GENERALES_URL}/api/v1/menu-pic?subDomain=${subDomain}&localId=${localId}&url=${encodeURIComponent(imageUrl)}`,
-        {
-          method: 'DELETE',
-        }
+      const response = await authDelete(
+        `${API_URLS.SERVICIOS_GENERALES_URL}/api/v1/menu-pic?subDomain=${subDomain}&localId=${localId}&url=${encodeURIComponent(imageUrl)}`
       );
 
       if (!response.ok) {
