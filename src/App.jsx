@@ -1,4 +1,5 @@
-import { BrowserRouter, Route, Routes, Navigate } from 'react-router-dom';
+import { useEffect } from 'react';
+import { BrowserRouter, Route, Routes, Navigate, useNavigate } from 'react-router-dom';
 import { useSelector } from 'react-redux';
 import { QueryClientProvider, QueryClient } from "@tanstack/react-query";
 import { TooltipProvider } from "@/components/ui/tooltip";
@@ -81,12 +82,21 @@ const SuperAdminRoute = ({ children }) => {
 };
 
 const AppContent = () => {
-  const { showSetupOptions, handleSetupChoice } = useAuth();
+  const navigate = useNavigate();
+  const { showSetupOptions, handleSetupChoice, navigationPath, setNavigationPath } = useAuth();
   const isAuthenticated = useSelector(state => state.auth.isAuthenticated);
   const userRole = useSelector(state => state.auth.role);
   const localId = useSelector(state => state.auth.localId);
   const subDomain = useSelector(state => state.auth.subDomain);
   const needsBusinessSetup = !localId || !subDomain;
+
+  // Handle navigation from useAuth hook
+  useEffect(() => {
+    if (navigationPath) {
+      navigate(navigationPath);
+      setNavigationPath(null);
+    }
+  }, [navigationPath, navigate, setNavigationPath]);
 
   return (
     <>

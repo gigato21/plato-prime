@@ -1,6 +1,5 @@
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useCallback } from 'react';
 import { useDispatch } from 'react-redux';
-import { useNavigate } from 'react-router-dom';
 import { login } from '../redux/slices/authSlice';
 import { getApiUrls } from '@/config/api';
 import { toast } from 'sonner';
@@ -10,13 +9,13 @@ const USE_MOCK = false; // Cambia a false cuando quieras conectarte al backend r
 
 export const useAuth = () => {
   const API_URLS = getApiUrls();
-  const navigate = useNavigate();
   const dispatch = useDispatch();
   const [isLoading, setIsLoading] = useState(false);
   const [showWelcomeModal, setShowWelcomeModal] = useState(false);
   const [userBusinesses, setUserBusinesses] = useState([]);
   const [showBusinessSelector, setShowBusinessSelector] = useState(false);
   const [showSetupOptions, setShowSetupOptions] = useState(false);
+  const [navigationPath, setNavigationPath] = useState(null);
 
   // Función para simular inicio de sesión automático al cargar la aplicación
   useEffect(() => {
@@ -87,7 +86,7 @@ export const useAuth = () => {
       */
       
       toast.success('Inicio de sesión mock exitoso');
-      navigate('/');
+      setNavigationPath('/');
       setIsLoading(false);
     }, 500);
   };
@@ -148,7 +147,7 @@ export const useAuth = () => {
               phone: userData.phone,
               role: userData.role.name
             }));
-            navigate('/setup-choice');
+            setNavigationPath('/setup-choice');
             return;
           }
           // Guardamos los datos del usuario y token junto con los negocios
@@ -186,8 +185,17 @@ export const useAuth = () => {
       accessToken: userBusinesses.accessToken,
     }));
     setShowBusinessSelector(false);
-    navigate('/');
+    setNavigationPath('/');
   };
+
+  const handleSetupChoice = useCallback((choice) => {
+    setShowSetupOptions(false);
+    if (choice === 'create') {
+      setNavigationPath('/create-business');
+    } else if (choice === 'integrate') {
+      setNavigationPath('/integration-setup');
+    }
+  }, []);
   
   return {
     isLoading,
@@ -198,8 +206,11 @@ export const useAuth = () => {
     userBusinesses,
     showSetupOptions,
     setShowSetupOptions,
+    navigationPath,
+    setNavigationPath,
     handleLogin,
     handleBusinessSelect,
+    handleSetupChoice,
     handleMockLogin, // Exportamos la función de mock para poder usarla desde otros componentes
     USE_MOCK // Exportamos la variable para saber si estamos en modo mock
   };
