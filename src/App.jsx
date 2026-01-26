@@ -16,6 +16,7 @@ import DeliveryZones from './pages/DeliveryZones';
 // import Share from './pages/Share';
 import DigitalMenu from './pages/DigitalMenu';
 import SignupPage from './pages/SignupPage';
+import AuthPage from './pages/AuthPage';
 import TokenMonitor from './pages/TokenMonitor';
 import CreateBusiness from './pages/CreateBusiness';
 import BusinessVerificationRoute from './components/BusinessVerificationRoute';
@@ -207,6 +208,7 @@ const AppContent = () => {
           <Routes>
             <Route path="/login" element={<LoginPage />} />
             <Route path="/registro" element={<SignupPage />} />
+            <Route path="/auth" element={<AuthPage />} />
             <Route path="*" element={<Navigate to="/login" replace />} />
           </Routes>
         </PageWrapper>
