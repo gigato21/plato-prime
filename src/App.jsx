@@ -25,6 +25,7 @@ import MenuGenerator from './pages/MenuGenerator';
 import Gallery from './pages/Gallery';
 import IntegrationSetup from './pages/IntegrationSetup';
 import SetupOptionsModal from './components/setup/SetupOptionsModal';
+import RoleManagement from './pages/RoleManagement';
 import { useAuth } from './hooks/useAuth';
 import BusinessSetupChoice from './pages/BusinessSetupChoice';
 import Dashboard from './pages/Dashboard';
@@ -192,6 +193,9 @@ const AppContent = () => {
                               <BusinessVerificationRoute><Gallery /></BusinessVerificationRoute>
                             </PrivateRoute>
                           } />
+                          
+                          {/* Ruta de gestión de roles (protegida por el componente mismo) */}
+                          <Route path="/role-management" element={<RoleManagement />} />
                           
                           {/* Rutas especiales para superadmin */}
                           {userRole === 'superadmin' && (
