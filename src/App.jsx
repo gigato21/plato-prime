@@ -1,9 +1,11 @@
 import { useEffect, forwardRef } from 'react';
 import { BrowserRouter, Route, Routes, Navigate, useNavigate } from 'react-router-dom';
-import { useSelector } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { QueryClientProvider, QueryClient } from "@tanstack/react-query";
 import { TooltipProvider } from "@/components/ui/tooltip";
 import { Toaster } from "@/components/ui/sonner";
+import { supabase } from '@/integrations/supabase/client';
+import { login as reduxLogin, logout as reduxLogout } from '@/redux/slices/authSlice';
 import Layout from './components/Layout';
 import LoginPage from './pages/LoginPage';
 // import Dashboard from './pages/Dashboard';
@@ -84,12 +86,74 @@ const SuperAdminRoute = ({ children }) => {
 
 const AppContent = () => {
   const navigate = useNavigate();
+  const dispatch = useDispatch();
   const { showSetupOptions, handleSetupChoice, navigationPath, setNavigationPath } = useAuth();
   const isAuthenticated = useSelector(state => state.auth.isAuthenticated);
   const userRole = useSelector(state => state.auth.role);
   const localId = useSelector(state => state.auth.localId);
   const subDomain = useSelector(state => state.auth.subDomain);
   const needsBusinessSetup = !localId || !subDomain;
+
+  // Sync backend auth session -> Redux auth state (prevents /login redirect loops)
+  useEffect(() => {
+    const applySession = async (session) => {
+      if (!session?.user) {
+        dispatch(reduxLogout());
+        return;
+      }
+
+      // Fetch role from user_roles; if missing, default to 'worker' to keep existing UI usable.
+      let role = 'worker';
+      try {
+        const { data, error } = await supabase
+          .from('user_roles')
+          .select('role')
+          .eq('user_id', session.user.id)
+          .maybeSingle();
+        if (!error && data?.role) {
+          role = data.role === 'admin' ? 'admin' : 'worker';
+        }
+      } catch {
+        // keep default role
+      }
+
+      dispatch(
+        reduxLogin({
+          isAuthenticated: true,
+          accessToken: session.access_token,
+          _id: session.user.id,
+          name:
+            session.user.user_metadata?.name ||
+            session.user.user_metadata?.full_name ||
+            session.user.email ||
+            'Usuario',
+          email: session.user.email,
+          phone: null,
+          role,
+          // Preserve any existing business context in Redux; app will still enforce setup if missing.
+          subDomain,
+          localId,
+        })
+      );
+    };
+
+    // Listener FIRST
+    const { data: { subscription } } = supabase.auth.onAuthStateChange((event, session) => {
+      // Avoid doing async work directly in the callback
+      setTimeout(() => {
+        applySession(session);
+      }, 0);
+    });
+
+    // THEN hydrate
+    supabase.auth.getSession().then(({ data: { session } }) => {
+      applySession(session);
+    });
+
+    return () => subscription.unsubscribe();
+    // We intentionally don't depend on subDomain/localId to avoid re-subscribing.
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [dispatch]);
 
   // Handle navigation from useAuth hook
   useEffect(() => {
