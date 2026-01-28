@@ -1,4 +1,4 @@
-import { useEffect } from 'react';
+import { useEffect, forwardRef } from 'react';
 import { BrowserRouter, Route, Routes, Navigate, useNavigate } from 'react-router-dom';
 import { useSelector } from 'react-redux';
 import { QueryClientProvider, QueryClient } from "@tanstack/react-query";
@@ -37,13 +37,13 @@ import IntegrationPage from './pages/IntegrationPage/IntegrationPage';
 import IntegrationPage2 from './pages/IntegrationPage2/IntegrationPage2';
 const queryClient = new QueryClient();
 
-const PageWrapper = ({ children }) => {
+const PageWrapper = forwardRef(function PageWrapper({ children }, ref) {
   return (
-    <div className="animate-in fade-in slide-in-from-bottom-2 duration-300">
+    <div ref={ref} className="animate-in fade-in slide-in-from-bottom-2 duration-300">
       {children}
     </div>
   );
-};
+});
 
 const PrivateRoute = ({ children, allowedRoles = ['admin', 'worker'] }) => {
   const isAuthenticated = useSelector(state => state.auth.isAuthenticated);
