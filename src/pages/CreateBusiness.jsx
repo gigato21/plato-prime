@@ -45,7 +45,7 @@ const CreateBusiness = () => {
     localAceptaRecojo: "1",
     localAceptaPagoEnLinea: "1",
     localSoloPagoEnLinea: "0",
-    localPorcentajeImpuesto: 18,
+    localPorcentajeImpuesto: 16,
   });
 
   const validateStep = (step) => {
@@ -98,8 +98,9 @@ const CreateBusiness = () => {
         // Critical config validations are boolean and don't need explicit validation
         break;
       case 4:
-        if (typeof formData.localPorcentajeImpuesto !== 'number' || formData.localPorcentajeImpuesto < 0) {
-          toast.error("El porcentaje de impuesto debe ser un número válido");
+        const taxValue = Number(formData.localPorcentajeImpuesto);
+        if (isNaN(taxValue) || taxValue < 0 || taxValue > 100) {
+          toast.error("El porcentaje de IVA debe ser un número entre 0 y 100");
           return false;
         }
         break;

@@ -9,7 +9,7 @@ const TaxConfigStep = ({ data, updateData }) => {
     const { name, value } = e.target;
     
     if (name === 'localPorcentajeImpuesto') {
-      const numValue = parseFloat(value);
+      const numValue = parseFloat(value) || 0;
       if (numValue < 0 || numValue > 100) {
         toast({
           title: "Valor inválido",
@@ -18,6 +18,8 @@ const TaxConfigStep = ({ data, updateData }) => {
         });
         return;
       }
+      updateData({ ...data, [name]: numValue });
+      return;
     }
     
     updateData({ ...data, [name]: value });
