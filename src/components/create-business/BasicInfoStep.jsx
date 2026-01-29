@@ -14,7 +14,7 @@ const BasicInfoStep = ({ data, updateData }) => {
     
     // Actualizar automáticamente linkDominio cuando cambie el subdominio
     if (name === 'subdominio') {
-      updates.linkDominio = `${value || ''}.cartaai.pe`;
+      updates.linkDominio = `https://plato-prime.lovable.app/${value || ''}`;
     }
     
     updateData(updates);
@@ -130,7 +130,7 @@ const BasicInfoStep = ({ data, updateData }) => {
             onChange={handleChange}
             onBlur={handleBlur}
             className="glass-input text-cartaai-white mt-1"
-            placeholder="subdominio.cartaai.pe"
+            placeholder="plato-prime.lovable.app/subdominio"
             required
             disabled
           />

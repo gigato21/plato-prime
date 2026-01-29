@@ -7,11 +7,11 @@ getApiUrls = () => {
   
   const urls = {
     development: {
-      SERVICIOS_GENERALES_URL: import.meta.env.VITE_SERVICIOS_GENERALES_URL || 'https://dev.ssgg.api.cartaai.pe',
+      SERVICIOS_GENERALES_URL: import.meta.env.VITE_SERVICIOS_GENERALES_URL || 'https://plato-prime.lovable.app',
       BOT_PROVIDER_URL: providerUrl
     },
     production: {
-      SERVICIOS_GENERALES_URL: import.meta.env.VITE_SERVICIOS_GENERALES_URL || 'https://ssgg.api.cartaai.pe',
+      SERVICIOS_GENERALES_URL: import.meta.env.VITE_SERVICIOS_GENERALES_URL || 'https://plato-prime.lovable.app',
       BOT_PROVIDER_URL: providerUrl
     },
     local: {
