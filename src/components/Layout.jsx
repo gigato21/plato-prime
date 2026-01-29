@@ -309,7 +309,7 @@ const Layout = ({ children }) => {
                   
                   {userRole !== 'superadmin' && (
                     <button 
-                      onClick={() => window.open(`https://${subDomain}.cartaai.pe`, '_blank')}
+                      onClick={() => window.open(`https://plato-prime.lovable.app/${subDomain}`, '_blank')}
                       className="text-foreground text-sm font-semibold px-4 py-2 rounded-md bg-accent/50 hover:bg-accent/80 transition-all duration-300 flex items-center backdrop-blur-sm hover:shadow-md"
                     >
                       <FileText className="mr-2 h-4 w-4" /> 

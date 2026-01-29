@@ -55,7 +55,7 @@ const CreateLocalForm = ({ onClose, onCancel }) => {
       
       // Si se está modificando el subdominio, actualizar automáticamente el linkDominio
       if (name === 'subDomain') {
-        newData.linkDominio = `${value}.cartaai.pe`;
+        newData.linkDominio = `https://plato-prime.lovable.app/${value}`;
         newData.subdominio = value; // También actualizamos el subdominio
       }
       
@@ -367,7 +367,7 @@ const CreateLocalForm = ({ onClose, onCancel }) => {
                 placeholder="Ej: mirestaurante"
               />
               <span className="text-cartaai-white/60 whitespace-nowrap">
-                .cartaai.pe
+                .plato-prime.lovable.app
               </span>
             </div>
             {formData.subDomain && (
