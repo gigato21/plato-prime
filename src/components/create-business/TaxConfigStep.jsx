@@ -35,17 +35,17 @@ const TaxConfigStep = ({ data, updateData }) => {
             htmlFor="localPorcentajeImpuesto" 
             className="text-sm sm:text-base dark:text-gray-200 text-gray-700"
           >
-            Porcentaje de Impuesto (IGV)
+            Porcentaje de IVA
           </Label>
           <p className="text-sm text-gray-500 dark:text-gray-400 mb-2">
-            Configura el porcentaje de impuesto que se aplicará a los productos. En Perú, el IGV estándar es 18%.
+            Configura el porcentaje de IVA que se aplicará a los productos. En México, el IVA estándar es 16%.
           </p>
           <Input
             id="localPorcentajeImpuesto"
             name="localPorcentajeImpuesto"
             type="number"
             step="0.01"
-            value={data.localPorcentajeImpuesto || '18'}
+            value={data.localPorcentajeImpuesto || '16'}
             onChange={handleChange}
             className="glass-input text-cartaai-white mt-1 text-sm sm:text-base h-8 sm:h-10"
           />
