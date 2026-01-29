@@ -1,10 +1,11 @@
+// Configuración de IVA para México (16%)
 export const prepareTaxConfig = (localId) => ({
   listaImpuestos: [{
     tieneErrores: false,
     mensajes: [],
     igvId: "1",
-    igvPorcentajeIgv: "18",
-    igvNombre: "IGV",
+    igvPorcentajeIgv: "16",
+    igvNombre: "IVA",
     igvEstado: "1",
     igvFiscalizado: "1",
     localId: localId,

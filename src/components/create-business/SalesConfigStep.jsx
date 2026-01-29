@@ -47,16 +47,19 @@ const SalesConfigStep = ({ data, updateData }) => {
 
         <div>
           <Label htmlFor="localPorcentajeImpuesto" className="text-sm sm:text-base dark:text-gray-200 text-gray-700">
-            Porcentaje de Impuesto
+            Porcentaje de IVA
           </Label>
           <Input
             id="localPorcentajeImpuesto"
             name="localPorcentajeImpuesto"
             type="number"
             step="0.01"
-            value={data.localPorcentajeImpuesto || '18'}
+            min="0"
+            max="100"
+            value={data.localPorcentajeImpuesto || '16'}
             onChange={handleChange}
             className="glass-input text-cartaai-white mt-1 text-sm sm:text-base h-8 sm:h-10"
+            placeholder="16"
           />
         </div>
 

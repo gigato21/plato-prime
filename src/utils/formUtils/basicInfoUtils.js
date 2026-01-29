@@ -1,3 +1,4 @@
+// Configuración base para México
 export const prepareBasicInfo = (basicInfo, salesConfig) => ({
   subdominio: basicInfo.subdominio || "",
   dominio: basicInfo.dominio || "",
@@ -8,9 +9,9 @@ export const prepareBasicInfo = (basicInfo, salesConfig) => ({
   localDireccion: basicInfo.localDireccion || "",
   localLatitud: basicInfo.localLatitud || "",
   localLongitud: basicInfo.localLongitud || "",
-  localMontoMinimo: salesConfig.localMontoMinimo || "30.00",
+  localMontoMinimo: salesConfig.localMontoMinimo || "50.00",
   localIdioma: "es",
-  localZonaHoraria: "America/Lima",
+  localZonaHoraria: "America/Mexico_City",
   localRedesSociales: basicInfo.localRedesSociales || "",
   localCartaGenerica: salesConfig.localCartaGenerica || "1",
   localDepartamento: basicInfo.localDepartamento || "",
@@ -21,16 +22,16 @@ export const prepareBasicInfo = (basicInfo, salesConfig) => ({
   localPermiteComprobanteMenuOnline: salesConfig.localPermiteComprobanteMenuOnline || "1",
   monedaFacturacion: {
     monedaFacturacionId: "1",
-    monedaFacturacionDescripcion: "Soles",
-    monedaFacturacionSimbolo: "S/",
-    monedaFacturacionIsocode: "PEN",
+    monedaFacturacionDescripcion: "Peso Mexicano",
+    monedaFacturacionSimbolo: "$",
+    monedaFacturacionIsocode: "MXN",
     monedaFacturacionChecksum: "abc123",
     monedaFacturacionEstado: "1",
     monedaList: [],
     precioLocalProductoList: [],
     precioLocalProductoMonedaList: []
   },
-  localPorcentajeImpuesto: salesConfig.localPorcentajeImpuesto || "18",
+  localPorcentajeImpuesto: salesConfig.localPorcentajeImpuesto || "16",
   localLogo: basicInfo.localLogo || "",
   localImagenFondoMenuOnline: basicInfo.localImagenFondoMenuOnline || "",
   localFondoMenuOnlineSelector: "2",

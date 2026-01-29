@@ -11,15 +11,15 @@ const LocationSettings = ({ restaurantData, setRestaurantData }) => {
       <div>
         <Label htmlFor="currency" className="dark:text-gray-200 text-gray-700">Moneda</Label>
         <Select
-          value={restaurantData.currency}
+          value={restaurantData.currency || "Peso Mexicano - $ - MXN"}
           onValueChange={(value) => handleSelectChange('currency', value)}
         >
-          <SelectTrigger className="bg-background text-cartaai-white">
-            <SelectValue />
+          <SelectTrigger className="bg-background text-foreground">
+            <SelectValue placeholder="Selecciona una moneda" />
           </SelectTrigger>
-          <SelectContent className="bg-cartaai-black text-cartaai-white">
-            <SelectItem value="Sol - S/ - PEN">Sol - S/ - PEN</SelectItem>
-            <SelectItem value="USD - $ - USD">USD - $ - USD</SelectItem>
+          <SelectContent className="bg-background text-foreground z-50">
+            <SelectItem value="Peso Mexicano - $ - MXN">Peso Mexicano - $ - MXN</SelectItem>
+            <SelectItem value="USD - $ - USD">Dólar - $ - USD</SelectItem>
             <SelectItem value="Euro - € - EUR">Euro - € - EUR</SelectItem>
           </SelectContent>
         </Select>
